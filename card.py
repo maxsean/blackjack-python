@@ -1,8 +1,8 @@
-class Card():
+class Card:
 
     FACES = {"A": 1, "J": 10, "Q": 10, "K": 10}
 
-    def _inti_(self, face, suit):
+    def __init__(self, face, suit):
         self.face = face
         self.suit = suit
 
