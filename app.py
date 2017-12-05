@@ -1,4 +1,5 @@
 from deck import Deck
+from hand import Hand
 from random import shuffle
 
 message = ""
