@@ -1,3 +1,5 @@
+import builtins
+
 class Hand:
 
     def __init__(self):
@@ -17,7 +19,7 @@ class Hand:
         value = 0
         for card in self.player_hand:
             face = card.get_face()
-            value = value + FACE_VALUES[face]
+            value = value + builtins.FACE_VALUES[face]
         for card in self.player_hand:
             face = card.get_face()
             if face == 'A' and value <= 11:

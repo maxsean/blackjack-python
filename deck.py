@@ -1,11 +1,12 @@
 from card import Card
 from random import shuffle
+import builtins
 
 class Deck:
 
     def __init__(self):
         popped = []
-        self.cards = [Card(face, suit) for face in FACES for suit in SUITS]
+        self.cards = [Card(face, suit) for face in builtins.FACES for suit in builtins.SUITS]
         self.shuffle()
 
     def __str__(self):
@@ -15,7 +16,7 @@ class Deck:
         return s
 
     def shuffle(self):
-        random.shuffle(self.cards)
+        shuffle(self.cards)
 
     def deal_card(self):
         popped = self.cards.pop(0)

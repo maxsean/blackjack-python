@@ -1,24 +1,79 @@
 from deck import Deck
 from hand import Hand
-from random import shuffle
+import builtins
 
-message = ""
-outcome = ""
-score = 0
-deck = []
-player = []
-dealer = []
+def deal():
+    if builtins.in_play == True:
+        builtins.message = "Here is the new hand"
+        builtins.score -= 1
+        builtins.deck = Deck()
+        builtins.player = Hand()
+        builtins.dealer = Hand()
+        builtins.player.add_card(builtins.deck.deal_card())
+        builtins.dealer.add_card(builtins.deck.deal_card())
+        builtins.player.add_card(builtins.deck.deal_card())
+        builtins.dealer.add_card(builtins.deck.deal_card())
+    if builtins.in_play == False:
+        builtins.deck = Deck()
+        builtins.player = Hand()
+        builtins.dealer = Hand()
+        builtins.player.add_card(builtins.deck.deal_card())
+        builtins.dealer.add_card(builtins.deck.deal_card())
+        builtins.player.add_card(builtins.deck.deal_card())
+        builtins.dealer.add_card(builtins.deck.deal_card())
+        builtins.message = "New Hand. Hit or Stand?"
+    builtins.in_play = True
+    builtins.outcome = "Dealer: " + str(builtins.dealer.get_value()) + "  Player: " + str(builtins.player.get_value())
 
-SUITS = [
-    "CLUB", "DIAMOND", "SPADE", "HEART"
-]
+def hit():
+    if builtins.in_play == True:
+        builtins.player.add_card(builtins.deck.deal_card())
+        builtins.message = "Hit or Stand?"
+        if builtins.player.get_value() > 21:
+            builtins.in_play = False
+            builtins.message = "Player busted! You Lose! "
+            builtins.score -= 1
+        builtins.outcome = "Dealer: " + str(builtins.dealer.get_value()) + "  Player: " + str(builtins.player.get_value())
 
-FACES = [
-    "2", "3", "4", "5", "6", "7", "8", "9", "10", 'J', 'Q', 'K', 'A'
-]
+def stand():
+    if builtins.in_play == False:
+        builtins.message = "The hand is already over. Deal again"
+    else:
+        while builtins.dealer.get_value() < 17:
+            builtins.dealer.add_card(builtins.deck.deal_card())
+        if builtins.dealer.get_value() > 21:
+            builtins.message = "Dealer busted. You win! "
+            builtins.score += 1
+            builtins.in_play = False
 
-FACE_VALUES = {"A": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, "9": 9, "J": 10, "Q": 10, "K": 10}
+        elif builtins.dealer.get_value() > builtins.player.get_value():
+            builtins.message = "Dealer wins! "
+            builtins.score -= 1
+            builtins.in_play = False
 
-deck = Deck().get_deck()
-shuffle(deck)
-print deck
+        elif builtins.dealer.get_value() == builtins.player.get_value():
+            builtins.message = "Tie! Dealer wins! "
+            builtins.score -= 1
+            builtins.in_play = False
+
+        elif builtins.dealer.get_value() < builtins.player.get_value():
+            builtins.message = "You win! "
+            builtins.score += 1
+            builtins.in_play = False
+
+        builtins.outcome = "Dealer: " + str(builtins.dealer.get_value()) + "  Player: " + str(builtins.player.get_value())
+
+print "Welcome to Blackjack Python"
+deal()
+print builtins.outcome
+user_input = raw_input(builtins.message + " ")
+
+while builtins.in_play == True:
+    if user_input == "Hit":
+        hit()
+        print builtins.outcome
+        user_input = raw_input(builtins.message + " ")
+    elif user_input == "Stand":
+        stand()
+        print builtins.outcome
+        print builtins.message

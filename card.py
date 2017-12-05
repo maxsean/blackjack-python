@@ -1,3 +1,5 @@
+import builtins
+
 class Card:
 
     def __init__(self, face, suit):
@@ -12,7 +14,3 @@ class Card:
 
     def get_face(self):
         return self.face
-    
-    @property
-    def value(self):
-        return self.FACES.get(self.face, self.face)
