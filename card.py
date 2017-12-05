@@ -1,10 +1,11 @@
 class Card:
 
-    FACES = {"A": 1, "J": 10, "Q": 10, "K": 10}
-
     def __init__(self, face, suit):
         self.face = face
         self.suit = suit
+
+    def __str__(self):
+        return self.suit + self.face
 
     @property
     def value(self):
